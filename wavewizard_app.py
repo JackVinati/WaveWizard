@@ -13,6 +13,7 @@ def analyze_audio_files(files, folder_path):
     output_html = ""
     file_paths = []
 
+    # Handle inputs: files can be a list of file paths or a folder path
     if files:
         file_paths.extend(files)
     if folder_path:
@@ -25,31 +26,85 @@ def analyze_audio_files(files, folder_path):
 
     for audio_file in file_paths:
         try:
+            # Load the audio file
             y, sr = librosa.load(audio_file, sr=None)
 
+            # Get original bit depth from file metadata
             with sf.SoundFile(audio_file) as f:
                 bit_depth_info = f.subtype_info
 
+            # Time domain analysis
             duration = len(y) / sr
 
-            desired_freq_resolution = 10.0  
+            # Frequency domain analysis
+            desired_freq_resolution = 10.0  # in Hz
 
+            # Calculate n_fft, limit it to a reasonable range
             n_fft = int(sr / desired_freq_resolution)
-            n_fft = 2 ** int(np.ceil(np.log2(n_fft)))  
+            n_fft = 2 ** int(np.ceil(np.log2(n_fft)))  # Next power of two
 
+            # Set maximum and minimum n_fft to avoid excessive computation
             max_n_fft = 32768
             min_n_fft = 1024
             n_fft = min(max(n_fft, min_n_fft), max_n_fft)
 
             hop_length = n_fft // 4
 
+            # Compute the Short-Time Fourier Transform (STFT)
             S = np.abs(librosa.stft(y, n_fft=n_fft, hop_length=hop_length))
 
+            # Compute the spectrogram (in dB)
             S_db = librosa.amplitude_to_db(S, ref=np.max)
 
+            # Average over time to get the frequency spectrum
             S_mean = np.mean(S, axis=1)
             freqs = np.linspace(0, sr / 2, len(S_mean))
 
+            # Plot the waveform
+            fig_waveform = plt.figure(figsize=(8, 4))
+            librosa.display.waveshow(y, sr=sr, alpha=0.5)
+            plt.title('Waveform', fontsize=14)
+            plt.xlabel('Time (s)', fontsize=12)
+            plt.ylabel('Amplitude', fontsize=12)
+            plt.tight_layout()
+            waveform_image = io.BytesIO()
+            plt.savefig(waveform_image, format='png', bbox_inches='tight')
+            plt.close(fig_waveform)
+            waveform_image.seek(0)
+            waveform_base64 = base64.b64encode(
+                waveform_image.read()).decode('utf-8')
+            waveform_html = f'<img src="data:image/png;base64,{waveform_base64}" alt="Waveform">'
+
+            # Calculate spectral features: spectral centroid, spectral bandwidth, and spectral rolloff
+            spectral_centroids = librosa.feature.spectral_centroid(y=y, sr=sr)[
+                0]
+            spectral_bandwidth = librosa.feature.spectral_bandwidth(y=y, sr=sr)[
+                0]
+            spectral_rolloff = librosa.feature.spectral_rolloff(
+                y=y, sr=sr, roll_percent=0.85)[0]
+            times = librosa.times_like(spectral_centroids)
+
+            # Plot the spectral features
+            fig_spectral_features = plt.figure(figsize=(8, 4))
+            plt.semilogy(times, spectral_centroids, label='Spectral Centroid')
+            plt.semilogy(times, spectral_bandwidth, label='Spectral Bandwidth')
+            plt.semilogy(times, spectral_rolloff,
+                         label='Spectral Rolloff', linestyle='--')
+            plt.title('Spectral Features', fontsize=14)
+            plt.xlabel('Time (s)', fontsize=12)
+            plt.ylabel('Hz', fontsize=12)
+            plt.legend(loc='upper right')
+            plt.tight_layout()
+            spectral_features_image = io.BytesIO()
+            plt.savefig(spectral_features_image,
+                        format='png', bbox_inches='tight')
+            plt.close(fig_spectral_features)
+            spectral_features_image.seek(0)
+            spectral_features_base64 = base64.b64encode(
+                spectral_features_image.read()).decode('utf-8')
+            spectral_features_html = f'<img src="data:image/png;base64,{spectral_features_base64}" alt="Spectral Features">'
+
+            # Plot the frequency spectrum
             fig1 = plt.figure(figsize=(8, 4))
             plt.semilogx(freqs, 20 * np.log10(S_mean + 1e-10))  # Avoid log(0)
             plt.xlabel('Frequency (Hz)', fontsize=12)
@@ -66,6 +121,7 @@ def analyze_audio_files(files, folder_path):
                 spectrum_image.read()).decode('utf-8')
             spectrum_html = f'<img src="data:image/png;base64,{spectrum_base64}" alt="Frequency Spectrum">'
 
+            # Plot the spectrogram
             fig3 = plt.figure(figsize=(8, 4))
             librosa.display.specshow(
                 S_db, sr=sr, x_axis='time', y_axis='linear', hop_length=hop_length)
@@ -82,17 +138,20 @@ def analyze_audio_files(files, folder_path):
                 spectrogram_image.read()).decode('utf-8')
             spectrogram_html = f'<img src="data:image/png;base64,{spectrogram_base64}" alt="Spectrogram">'
 
-           
+            # Analyze high-frequency content
+            # Define a threshold relative to the maximum amplitude
             threshold_db = -80  # dB
             max_amplitude_db = 20 * np.log10(np.max(S_mean + 1e-10))
             threshold_amplitude_db = max_amplitude_db + threshold_db
             threshold_amplitude = 10 ** (threshold_amplitude_db / 20)
 
+            # Find the highest frequency with significant content
             significant_indices = np.where(S_mean >= threshold_amplitude)[0]
             if len(significant_indices) > 0:
                 highest_freq = freqs[significant_indices[-1]]
 
-                estimated_sample_rate = highest_freq * 2 
+                # Estimate the real sample rate
+                estimated_sample_rate = highest_freq * 2  # Nyquist theorem
 
                 significant_freq_text = f"{highest_freq:.2f} Hz"
                 estimated_sample_rate_text = f"{estimated_sample_rate / 1000:.2f} kHz"
@@ -100,14 +159,17 @@ def analyze_audio_files(files, folder_path):
                 significant_freq_text = "No significant frequency content detected."
                 estimated_sample_rate_text = "N/A"
 
-           
+            # Estimate effective bit depth
+            # Calculate the signal's dynamic range
             signal_rms = np.sqrt(np.mean(y ** 2))
             noise_floor = np.percentile(np.abs(y), 0.1)
+            # Avoid division by zero
             dynamic_range_db = 20 * \
                 np.log10(signal_rms / (noise_floor + 1e-10))
 
             estimated_bit_depth = int(np.ceil(dynamic_range_db / 6.02))
 
+            # Prepare the output text as an HTML table
             output_text = f"""
             <h3 style="font-size:22px;">{os.path.basename(audio_file)}</h3>
             <table style="font-size:18px;">
@@ -122,6 +184,7 @@ def analyze_audio_files(files, folder_path):
             </table>
             """
 
+            # Plot histogram of sample values
             fig2 = plt.figure(figsize=(8, 4))
             plt.hist(y, bins=1000, alpha=0.7, color='blue',
                      edgecolor='black', log=True)
@@ -138,8 +201,13 @@ def analyze_audio_files(files, folder_path):
                 histogram_image.read()).decode('utf-8')
             histogram_html = f'<img src="data:image/png;base64,{histogram_base64}" alt="Histogram of Sample Amplitudes">'
 
+            # Combine text and images into HTML
             output_html += f"""
             {output_text}
+            <h4 style="font-size:20px;">Waveform</h4>
+            {waveform_html}
+            <h4 style="font-size:20px;">Spectral Features</h4>
+            {spectral_features_html}
             <h4 style="font-size:20px;">Frequency Spectrum</h4>
             {spectrum_html}
             <h4 style="font-size:20px;">Spectrogram</h4>
@@ -149,8 +217,10 @@ def analyze_audio_files(files, folder_path):
             <hr>
             """
         except Exception as e:
+            # Handle errors gracefully
             output_html += f"<p><strong>File:</strong> {os.path.basename(audio_file)}</p><p><strong>Error:</strong> {str(e)}</p><hr>"
 
+    # Return the aggregated HTML output
     return output_html
 
 
