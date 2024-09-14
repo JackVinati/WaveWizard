@@ -1,8 +1,3 @@
-# WaveWizard
-A Gradio app for analyzing audio files to determine true sample rate and bit depth.
-
-
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
