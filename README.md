@@ -25,7 +25,7 @@
 
 <h2>Demo</h2>
 <p>
-  <a href="https://huggingface.co/spaces/yourusername/AudioInsight">
+  <a href="https://huggingface.co/spaces/jackwine2/WaveWizard">
     <img src="https://img.shields.io/badge/Gradio-Demo-blue" alt="Gradio Demo" class="badge">
   </a>
 </p>
@@ -47,8 +47,8 @@
 </ul>
 
 <h3>Clone the Repository</h3>
-<pre><code>git clone https://github.com/yourusername/AudioInsight.git
-cd AudioInsight
+<pre><code>git clone https://github.com/JackVinati/WaveWizard.git
+cd WaveWizard
 </code></pre>
 
 <h3>Install Dependencies</h3>
@@ -101,7 +101,7 @@ gradio
 </ol>
 
 <h2>Project Structure</h2>
-<pre><code>AudioInsight/
+<pre><code>WaveWizard/
 ├── wavewizard_app.py     # Main application script
 ├── requirements.txt          # Python dependencies
 ├── README.md                 # Project documentation
