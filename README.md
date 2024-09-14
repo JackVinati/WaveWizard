@@ -124,7 +124,7 @@ gradio
 
 <h2>Contact</h2>
 <ul>
-  <li><strong>GitHub:</strong> <a href="https://github.com/JackVinati">@yourusername</a></li>
+  <li><strong>GitHub:</strong> <a href="https://github.com/JackVinati">@JackVinati</a></li>
 </ul>
 
 </body>
