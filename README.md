@@ -1,7 +1,7 @@
 <body>
 
 <h1>🎧 <strong>WaveWizard</strong> 🎶</h1>
-<p style="text-align: center; font-size: 1.2em;"><em>Uncover the true quality of your audio files with ease!</em></p>
+<p style="text-align: center; font-size: 1.2em;"><em>Tired of being unsure if your audio files are truly high quality or just upscaled fakes? Discover the truth behind your audio with WaveWizard! Dive deep into the intricate details of your music files and effortlessly uncover their real sample rate, bit depth, and more. Whether you're an audiophile, music producer, or just curious, WaveWizard empowers you to take control of your audio experience. Stop guessing and start knowing—your ears deserve the best!</em></p>
 
 <img src="assets/banner.png" alt="WaveWizard Banner" class="banner" />
 
