@@ -33,9 +33,11 @@
 
 <h2>Screenshots</h2>
 <h3>Interactive Interface</h3>
-<img src="assets/app_screenshot.png" alt="App Screenshot" class="screenshot">
+<img src="assets/1.png" alt="App Screenshot" class="screenshot">
 <h3>Detailed Analysis</h3>
-<img src="assets/analysis_screenshot.png" alt="Analysis Screenshot" class="screenshot">
+<img src="assets/2.png" alt="Analysis Screenshot" class="screenshot">
+<img src="assets/3.png" alt="Analysis Screenshot" class="screenshot">
+<img src="assets/4.png" alt="Analysis Screenshot" class="screenshot">
 
 <h2>Installation</h2>
 <h3>Prerequisites</h3>
