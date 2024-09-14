@@ -6,7 +6,7 @@ A Gradio app for analyzing audio files to determine true sample rate and bit dep
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AudioInsight - Uncover the True Quality of Your Audio Files</title>
+  <title>WaveWizard - Uncover the True Quality of Your Audio Files</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -88,13 +88,13 @@ A Gradio app for analyzing audio files to determine true sample rate and bit dep
 </head>
 <body>
 
-<h1>🎧 <strong>AudioInsight</strong> 🎶</h1>
+<h1>🎧 <strong>WaveWizard</strong> 🎶</h1>
 <p style="text-align: center; font-size: 1.2em;"><em>Uncover the true quality of your audio files with ease!</em></p>
 
-<img src="assets/banner.png" alt="AudioInsight Banner" class="banner" />
+<img src="assets/banner.png" alt="WaveWizard Banner" class="banner" />
 
 <h2>Overview</h2>
-<p><strong>AudioInsight</strong> is an interactive Gradio app that analyzes audio files to determine their actual sample rate and bit depth. It helps you verify if your high-resolution audio files are genuine or upsampled from lower-quality sources.</p>
+<p><strong>WaveWizard</strong> is an interactive Gradio app that analyzes audio files to determine their actual sample rate and bit depth. It helps you verify if your high-resolution audio files are genuine or upsampled from lower-quality sources.</p>
 <ul>
   <li><strong>Detects true sample rate</strong> by analyzing significant frequency content.</li>
   <li><strong>Estimates effective bit depth</strong> based on dynamic range.</li>
