@@ -16,6 +16,8 @@
 
 <h2>Features</h2>
 <ul>
+  <li>🎶 <strong>Wveform</strong></li>
+  <li>📈 <strong>Spectral Features</strong></li>
   <li>📊 <strong>Frequency Spectrum Analysis</strong></li>
   <li>🌈 <strong>Spectrogram Visualization</strong></li>
   <li>📈 <strong>Amplitude Histogram</strong></li>
