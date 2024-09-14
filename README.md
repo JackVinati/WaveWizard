@@ -65,7 +65,7 @@ gradio
 
 <h2>Usage</h2>
 <h3>Running the App</h3>
-<pre><code>python audio_analyzer_app.py
+<pre><code>python wavewizard_app.py
 </code></pre>
 
 <h3>Accessing the Interface</h3>
@@ -102,7 +102,7 @@ gradio
 
 <h2>Project Structure</h2>
 <pre><code>AudioInsight/
-├── audio_analyzer_app.py     # Main application script
+├── wavewizard_app.py     # Main application script
 ├── requirements.txt          # Python dependencies
 ├── README.md                 # Project documentation
 ├── LICENSE                   # License file
@@ -124,8 +124,7 @@ gradio
 
 <h2>Contact</h2>
 <ul>
-  <li><strong>GitHub:</strong> <a href="https://github.com/yourusername">@yourusername</a></li>
-  <li><strong>Email:</strong> your.email@example.com</li>
+  <li><strong>GitHub:</strong> <a href="https://github.com/JackVinati">@yourusername</a></li>
 </ul>
 
 </body>
