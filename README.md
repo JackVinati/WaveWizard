@@ -25,11 +25,11 @@
 
 <h2>Demo</h2>
 <p>
-  <a href="https://huggingface.co/spaces/jackwine2/WaveWizard">
+  <a href="https://huggingface.co/spaces/jackvinati/WaveWizard">
     <img src="https://img.shields.io/badge/Gradio-Demo-blue" alt="Gradio Demo" class="badge">
   </a>
 </p>
-<p><em>(You can host your app on Hugging Face Spaces or provide a link to a live demo if available.)</em></p>
+<p><em>(Give it a try!)</em></p>
 
 <h2>Screenshots</h2>
 <h3>Interactive Interface</h3>
