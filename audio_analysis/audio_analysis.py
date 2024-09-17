@@ -95,5 +95,4 @@ def analyze_audio_files(files, folder_path):
         except Exception as e:
             output_html += generate_error_message(audio_file, e)
 
-    # Return the aggregated HTML output
     return output_html
