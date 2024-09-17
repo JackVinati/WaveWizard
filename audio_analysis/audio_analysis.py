@@ -15,7 +15,6 @@ def analyze_audio_files(files, folder_path):
     output_html = ""
     file_paths = []
 
-    # Collect file paths
     try:
         if files:
             file_paths.extend(files)
@@ -47,7 +46,6 @@ def analyze_audio_files(files, folder_path):
                     audio_file, f"Frequency Analysis Error: {str(e)}")
                 continue
 
-            # Generate plots
             try:
                 waveform_html = plot_waveform(y, sr)
                 spectral_features_html = plot_spectral_features(y, sr)
@@ -66,7 +64,6 @@ def analyze_audio_files(files, folder_path):
             significant_freq_text = f"{highest_freq:.2f} Hz" if highest_freq else "No significant frequency content detected."
             estimated_sample_rate_text = f"{estimated_sample_rate / 1000:.2f} kHz" if estimated_sample_rate else "N/A"
 
-            # Prepare the output text as an HTML table
             output_text = f"""
             <h3 style="font-size:22px;">{os.path.basename(audio_file)}</h3>
             <table style="font-size:18px;">
@@ -81,7 +78,6 @@ def analyze_audio_files(files, folder_path):
             </table>
             """
 
-            # Combine text and images into HTML
             output_html += f"""
             {output_text}
             <h4 style="font-size:20px;">Waveform</h4>
@@ -97,7 +93,6 @@ def analyze_audio_files(files, folder_path):
             <hr>
             """
         except Exception as e:
-            # Handle unexpected errors gracefully
             output_html += generate_error_message(audio_file, e)
 
     # Return the aggregated HTML output
