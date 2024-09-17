@@ -104,11 +104,18 @@ gradio
 
 <h2>Project Structure</h2>
 <pre><code>WaveWizard/
-├── wavewizard_app.py     # Main application script
-├── requirements.txt          # Python dependencies
-├── README.md                 # Project documentation
-├── LICENSE                   # License file
-└── assets/                   # Images and other assets
+├WaveWizard/
+├── wavewizard_app.py       # Main application script
+├── requirements.txt        # Python dependencies
+├── README.md               # Project documentation
+├── LICENSE                 # License file
+├── assets/                 # Images and other assets
+├── audio_analysis/         # Main package folder
+│   ├── __init__.py         # Initializes the package
+│   ├── audio_analysis.py   # Orchestrator function for analysis
+│   ├── audio_processing.py # Module for audio processing functions
+│   ├── audio_plotting.py   # Module for plotting functions
+│   ├── utility.py          # Module for utility functions
 </code></pre>
 
 <h2>Contributing</h2>
