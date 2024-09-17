@@ -1,4 +1,3 @@
-# app.py
 import gradio as gr
 from audio_analysis.audio_analysis import analyze_audio_files
 
@@ -20,7 +19,7 @@ with gr.Blocks() as demo:
     analyze_button = gr.Button("Analyze")
     output_display = gr.HTML()
 
-    # Bind the Gradio button to the analyze_wrapper function
+    # analyze_wrapper function
     analyze_button.click(analyze_wrapper, inputs=[
                          file_input, folder_input], outputs=output_display)
 
