@@ -1,4 +1,3 @@
-# audio_plotting.py
 import matplotlib.pyplot as plt
 import librosa.display
 import io
